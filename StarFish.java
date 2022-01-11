@@ -7,6 +7,7 @@ public class StarFish {
 	private int l;
 	private int[] xs = new int[10];
 	private int[] ys = new int[10];
+	private int maxReached = 1;
 
 	
 	StarFish(Color color, int x, int y, int l, int[] xs, int[] ys){
@@ -65,11 +66,16 @@ public class StarFish {
 	public int getL() {
 		return this.l;
 	}
+
+	public int getMaxReached() {
+		return maxReached;
+	}
+
+	public void setMaxReached(int maxReached) {
+		this.maxReached = maxReached;
+	}
 	
-	
-	
-	
-	
+
 	
 	
 	

@@ -3,13 +3,18 @@ import java.awt.Color;
 public class Fish {
 
 	private Color color;
-	private int x;
-	private int y;
+	private double x;
+	private double y;
+	private double l;
+	private int speed = 1;
+	private double xSpeedProportion = 1;
+	private double ySpeedProportion = 0;
 	
-	Fish(Color color, int x, int y){
+	Fish(Color color, int x, int y, double l){
 		this.color = color;
 		this.x = x;
 		this.y = y;
+		this.l = l;
 	}
 	
 	public void setColor(Color color) {
@@ -20,20 +25,52 @@ public class Fish {
 		return this.color;
 	}
 
-	public void setX(int num) {
+	public void setX(double num) {
 		this.x = num;
 	}
 	
-	public void setY(int num) {
+	public void setY(double num) {
 		this.y = num;
 	}
 		
-	public int getX() {
+	public double getX() {
 		return this.x;
 	}
 	
-	public int getY() {
+	public double getY() {
 		return this.y;
+	}
+
+	public int getSpeed() {
+		return speed;
+	}
+
+	public void setSpeed(int speed) {
+		this.speed = speed;
+	}
+
+	public double getXSpeedProportion() {
+		return xSpeedProportion;
+	}
+
+	public void setXSpeedProportion(double xSpeedProportion) {
+		this.xSpeedProportion = xSpeedProportion;
+	}
+
+	public double getYSpeedProportion() {
+		return ySpeedProportion;
+	}
+
+	public void setYSpeedProportion(double ySpeedProportion) {
+		this.ySpeedProportion = ySpeedProportion;
+	}
+
+	public double getL() {
+		return l;
+	}
+
+	public void setL(double l) {
+		this.l = l;
 	}
 	
 	

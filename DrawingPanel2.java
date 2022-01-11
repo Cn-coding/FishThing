@@ -19,7 +19,7 @@ public class DrawingPanel2 extends JPanel implements ActionListener{
 	private Fish[] fish = new Fish[numOfFish];
 	private StarFish[] starFish = new StarFish[numOfStarFish];
 	Random rand = new Random();
-	private Timer myTimer = new Timer(100,this);
+	private Timer myTimer = new Timer(1,this);
 	private Graphics2D g2;
 	private boolean first = true;
 	
@@ -69,7 +69,7 @@ public class DrawingPanel2 extends JPanel implements ActionListener{
 			int width = rand.nextInt(55);
 			int height = rand.nextInt(55);
 			
-			int locx = rand.nextInt(1700); //1000
+			int locx = rand.nextInt(1800)-50; //1000
 			int locy = rand.nextInt(1000);
 			
 			sea[i] = new SeaParticle2(color, locx, locy, width, height);
@@ -90,7 +90,9 @@ public class DrawingPanel2 extends JPanel implements ActionListener{
 				x1 = rand.nextInt(1300);
 			}
 			
-			fish[i] = new Fish(color, x1, y1);
+			double l = rand.nextDouble()+0.5;
+			
+			fish[i] = new Fish(color, x1, y1, l);
 		}
 		
 		
@@ -134,6 +136,7 @@ public class DrawingPanel2 extends JPanel implements ActionListener{
 			ys4[8]=(int)(ys4[7]+(0.59*l));
 			ys4[9]=(int)(ys4[8]-(0.95*l));	
 			
+			
 			starFish[i] = new StarFish(color, x1, y1, l, xs4, ys4);
 			
 		}
@@ -141,9 +144,13 @@ public class DrawingPanel2 extends JPanel implements ActionListener{
 	}
 	
 	
-//	DrawingPanel2(){
-//		paintFirst(this.g2);
-//	}
+
+	
+	public void drawAStarFish(Graphics2D g2){
+		
+
+		
+	}
 	
 	
 	public void penguin(Graphics2D g2) {
@@ -208,13 +215,6 @@ public class DrawingPanel2 extends JPanel implements ActionListener{
 		
 	}
 	
-	public void paintFirst(Graphics2D g2) {
-
-
-		
-	}
-	
-	
 	
 	public void drawSea (SeaParticle2[] sea, Graphics2D g2) {
 		for (SeaParticle2 part: sea) {
@@ -233,20 +233,21 @@ public class DrawingPanel2 extends JPanel implements ActionListener{
 		for (Fish f: fish) {
 			g2.setColor(f.getColor());
 			
-			int x = f.getX();
-			int y = f.getY();
+			double x = f.getX();
+			double y = f.getY();
+			double l = f.getL(); 
 			
-			int[] xs3 = {x,x+25,x,x+100};
-			int[] ys3 = {y,y+50,y+100,y+50};
+			int[] xs3 = {(int)x,(int) (x+(l*25)),(int) x,(int) (x+(l*100))};
+			int[] ys3 = {(int)y,(int) (y+(l*50)),(int)(y+(l*100)),(int)(y+(l*50))};
 			g2.fillPolygon(xs3,ys3,4);
 			
-			g2.fillOval(x+80, y+20, 250, 60);
+			g2.fillOval((int)(x+(l*80)), (int)(y+(l*20)),(int) (l*250),(int) (l*60));
 			
 			g2.setColor(Color.white);
-			g2.fillOval(x+300, y+30, 20, 20);
+			g2.fillOval((int)(x+(l*300)), (int)(y+(l*30)), (int)(l*20), (int)(l*20));
 			
 			g2.setColor(Color.black);
-			g2.fillOval(x+308, y+35, 10, 10);
+			g2.fillOval((int)(x+(l*308)), (int)(y+(l*35)),(int) (l*10), (int)(l*10));
 		}
 	}
 	
@@ -254,21 +255,49 @@ public class DrawingPanel2 extends JPanel implements ActionListener{
 	public void drawStarFish (StarFish[] starFish, Graphics2D g2) {
 		
 		
+
+		
 		
 		for (StarFish sf: starFish) {
 
 			int x = sf.getX();
 			int y = sf.getY();
-			int[] xs = sf.getXs();
-			int[] ys = sf.getYs();
+
 			
 			Color color = sf.getColor();
 			int l = sf.getL();
 			
+			int[] xs4 = new int[10];
+			int[] ys4 = new int[10];
+			
+			xs4[0]=(int)(x);
+			xs4[1]=(int)(xs4[0]+l);
+			xs4[2]=(int)(xs4[1]+(0.31*l));
+			xs4[3]=(int)(xs4[2]+(0.31*l));
+			xs4[4]=(int)(xs4[3]+l);
+			xs4[5]=(int)(xs4[4]-(0.82*l));
+			xs4[6]=(int)(xs4[5]+(0.31*l));
+			xs4[7]=(int)(xs4[6]-(0.81*l));
+			xs4[8]=(int)(xs4[7]-(0.81*l));
+			xs4[9]=(int)(xs4[8]+(0.31*l));
+			
+			ys4[0]=(int)(y);
+			ys4[1]=(int)(ys4[0]);
+			ys4[2]=(int)(ys4[1]-(0.95*l));
+			ys4[3]=(int)(ys4[2]+(0.95*l));
+			ys4[4]=(int)(ys4[3]);
+			ys4[5]=(int)(ys4[4]+(0.59*l));
+			ys4[6]=(int)(ys4[5]+(0.95*l));
+			ys4[7]=(int)(ys4[6]-(0.59*l));
+			ys4[8]=(int)(ys4[7]+(0.59*l));
+			ys4[9]=(int)(ys4[8]-(0.95*l));	
+			
+			sf.setXs(xs4);
+			sf.setYs(ys4);			
 				
 			g2.setColor(color);
 			
-			g2.fillPolygon(xs, ys, 10);
+			g2.fillPolygon(xs4, ys4, 10);
 			
 			g2.setColor(Color.white);
 			
@@ -294,17 +323,48 @@ public class DrawingPanel2 extends JPanel implements ActionListener{
 	}
 	
 	
+	
+	public void fishMove(Fish f) {
+		
+		double x = f.getX();
+		double y = f.getY();
+		double xProportion = f.getXSpeedProportion();
+		double yProportion = f.getYSpeedProportion();
+		int speed = f.getSpeed();
+		
+		
+		
+		
+	}
+	
+	
+	
+	
 	public void actionPerformed (ActionEvent e) {
 		
 		if (e.getSource() == myTimer) {
 			for (SeaParticle2 part: sea) {
-				part.setX(part.getX()+5);
-				if (part.getX()+part.getWidth() > this.width) {
-					part.setX(rand.nextInt(10));
+				part.setX(part.getX()+rand.nextInt(3)+5);
+				if (part.getX()+part.getWidth() > this.width+50) {
+					part.setX(-50-rand.nextInt(10));
+				}
+			}
+			
+			for (StarFish sf: starFish) {
+				
+				sf.setL(sf.getL()+(2*sf.getMaxReached()));
+				sf.setX(sf.getX()-sf.getMaxReached());
+				sf.setY(sf.getY()-sf.getMaxReached());
+				if (sf.getL()>(55+rand.nextInt(15))) {
+					sf.setMaxReached(-1);
+				}
+				
+				if (sf.getL() <50) {
+					sf.setMaxReached(1);
 				}
 			}
 			repaint();
-			System.out.println("hi");
+
 		}
 		
 	}
